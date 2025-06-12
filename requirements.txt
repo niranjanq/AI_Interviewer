@@ -1,19 +1,31 @@
+# Streamlit UI
 streamlit
+
+# Google Gemini
 google-generativeai
 python-dotenv
+
+# PDF Parsing
 PyPDF2
 
-# Audio recording
-streamlit-mic-recorder
-streamlit-webrtc
-av
+# Audio processing
 pydub
+librosa
 soundfile
 ffmpeg-python
 
-# ML and NLP
+# Mic recording
+streamlit-mic-recorder
+streamlit-webrtc
+av
+
+# ML and GenAI
 torch
 torchaudio
 transformers
 datasets
 numpy
+
+# librosa subdependencies
+numba
+llvmlite
