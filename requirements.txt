@@ -12,6 +12,7 @@ PyPDF2
 pydub
 librosa
 soundfile
+ffmpeg
 ffmpeg-python
 
 # Mic recording
