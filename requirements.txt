@@ -1,16 +1,21 @@
+# Core Dependencies
 streamlit
-google-generativeai
 python-dotenv
 PyPDF2
+google-generativeai
 
-# Audio recording and processing
+# Audio Recording and Processing
 streamlit-mic-recorder
-streamlit-webrtc
+# streamlit-webrtc
 av
 pydub
-librosa
-soundfile
 ffmpeg-python
+soundfile
+
+# Librosa and Compatible Versions
+librosa==0.10.1
+numba==0.57.1
+llvmlite==0.40.1
 
 # ML and NLP
 torch
@@ -18,6 +23,3 @@ torchaudio
 transformers
 datasets
 numpy
-
-ffmpeg
-libavcodec-extra
