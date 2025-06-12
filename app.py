@@ -2,7 +2,7 @@ import streamlit as st
 from resume_role_gen import extract_text_from_resume, resume_based_role, skill_generation
 from candidate_response import record_response
 from audio_transcription import transcribe_audio
-from interview_q import asking_interview_questions, resume_based_questions
+from interview_q import asking_interview_questions, resume_based_questions, evaluate_performance
 
 st.title("Cogniview - AI Interviewer")
 st.subheader("Prepare for your next interview with AI")
@@ -84,3 +84,21 @@ if st.session_state.get("interview_started", False):
                     st.code(transcription)
         else:
             st.warning("Please transcribe your response before proceeding to the next question.")
+if st.button("🚀 Submit Interview"):
+    if st.session_state.get("question_index", 0) >=5:
+        st.error("Interview Incomplete. At least 5 questions are required to evaluate your performance.")
+    else:
+        # Collect all transcriptions
+        all_transcriptions = []
+        for i in range(st.session_state.question_index + 1):
+            trans_key = f"transcription_{i}"
+            if trans_key in st.session_state:
+                all_transcriptions.append(st.session_state[trans_key])
+            else:
+                all_transcriptions.append("No response provided.")
+
+        compiled_transcript = "\n\n".join(all_transcriptions)
+        feedback = evaluate_performance(compiled_transcript, role)
+        st.success("✅ Interview Evaluation Completed!")
+        st.markdown("### 📊 Feedback & Score:")
+        st.markdown(feedback)

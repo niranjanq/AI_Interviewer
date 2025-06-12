@@ -21,7 +21,7 @@ Always follow these rules:
 - Questions must be explainable verbally (no code writing).
 - Use the candidate’s response (transcription below) to tailor the next technical question.
 - Avoid repeating topics or asking previously asked questions.
-
+- Also try to cover all the perspects of the interview to cover up in 15 questions. 
 Candidate’s prior response:
 "{transcription}"
 
@@ -50,6 +50,7 @@ Instructions:
 - Focus only on topics explainable verbally (no code writing).
 - Use the {transcription} to create a relevant and progressive follow-up question.
 - Do not repeat topics already covered.
+- Also try to cover all {skills} in about 10 to 15 questions because I will be giving the feature that the user can submit after 15 questions.
 
 Return only the next technical question.
 '''
@@ -58,3 +59,20 @@ Return only the next technical question.
 
 
     
+def evaluate_performance(all_transcriptions, role):
+    evaluation_prompt = f"""
+    You are an expert interview evaluator. A candidate appeared for an interview for the role of {role}.
+    Here are their responses to the interview questions:
+
+    {all_transcriptions}
+
+    Please analyze these responses and provide:
+    1. An overall score out of 10 (based on technical accuracy, clarity, and relevance).
+    2. Detailed feedback highlighting strengths and areas for improvement.
+    3. Suggestions for how the candidate can better prepare in the future.
+
+    Do not include the candidate's response again in the output.
+    Be honest, constructive, and professional.
+    """
+    evaluation = model.generate_content(evaluation_prompt)
+    return evaluation.text.strip()
