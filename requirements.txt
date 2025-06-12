@@ -1,29 +1,28 @@
-# Streamlit UI
+# Core App
 streamlit
-
-# Google Gemini + Env
-google-generativeai
 python-dotenv
-
-# PDF Parsing
 PyPDF2
 
-# Audio Processing
-pydub
-librosa
-soundfile
-ffmpeg-python
+# Google Gemini
+google-generativeai
 
-# Mic Recording
+# Microphone Input
 streamlit-mic-recorder
 streamlit-webrtc
 av
 
-# ML and GenAI
+# Transformers + Whisper
 torch
 torchaudio
 transformers
 datasets
+
+# Audio processing (FFmpeg removed)
+# Removed: pydub
+# Removed: librosa
+# Removed: soundfile
+# Removed: ffmpeg
+# Removed: ffmpeg-python
+
+# Misc
 numpy
-numba
-llvmlite
