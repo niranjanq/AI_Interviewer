@@ -18,6 +18,8 @@ If your background or career interest lies outside these domains, please select 
 🛠️ *Support for additional roles is under development.*
 
 📩 If you encounter any issues while using the application, please inform us. Your feedback helps us improve!
+Also While talking please make sure you are loud and clear enough.
+Thank you 
 """)
 
 # Role Selection
