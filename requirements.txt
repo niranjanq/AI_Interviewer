@@ -1,5 +1,20 @@
 streamlit
 google-generativeai
-pydub
 python-dotenv
+PyPDF2
+
+# Audio recording and processing
+streamlit-mic-recorder
+streamlit-webrtc
+av
+pydub
+librosa
+soundfile
 ffmpeg-python
+
+# ML and NLP
+torch
+torchaudio
+transformers
+datasets
+numpy
