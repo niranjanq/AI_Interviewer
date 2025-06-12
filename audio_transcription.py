@@ -9,25 +9,32 @@ import torch
 from transformers import WhisperProcessor, WhisperForConditionalGeneration
 import streamlit as st
 
-# Ensure ffmpeg is available (works on Streamlit Cloud & Render)
-ffmpeg_path = "/tmp/ffmpeg"
+# 🔧 Use platform-independent temp path
+TMP_DIR = tempfile.gettempdir()
+ffmpeg_path = os.path.join(TMP_DIR, "ffmpeg")
+ffmpeg_archive = os.path.join(TMP_DIR, "ffmpeg.tar.xz")
+
+# ⛔ Download only if not already present
 if not os.path.exists(ffmpeg_path):
-    # Download static build of ffmpeg (safe public link)
-    ffmpeg_url = "https://johnvansickle.com/ffmpeg/releases/ffmpeg-release-i686-static.tar.xz"
-    ffmpeg_archive = "/tmp/ffmpeg.tar.xz"
-    urllib.request.urlretrieve(ffmpeg_url, ffmpeg_archive)
+    try:
+        st.info("🔽 Downloading ffmpeg (first time setup)...")
+        ffmpeg_url = "https://johnvansickle.com/ffmpeg/releases/ffmpeg-release-i686-static.tar.xz"
+        urllib.request.urlretrieve(ffmpeg_url, ffmpeg_archive)
 
-    with tarfile.open(ffmpeg_archive) as tar:
-        for member in tar.getmembers():
-            if "ffmpeg" in member.name and member.isfile():
-                tar.extract(member, path="/tmp/")
-                os.rename(f"/tmp/{member.name}", ffmpeg_path)
-                break
+        with tarfile.open(ffmpeg_archive) as tar:
+            for member in tar.getmembers():
+                if "ffmpeg" in member.name and member.isfile():
+                    tar.extract(member, path=TMP_DIR)
+                    extracted_path = os.path.join(TMP_DIR, member.name)
+                    os.rename(extracted_path, ffmpeg_path)
+                    break
+    except Exception as e:
+        st.warning(f"⚠️ Failed to download ffmpeg: {e}")
 
-os.environ["PATH"] = f"/tmp:{os.environ['PATH']}"
-AudioSegment.converter = which("ffmpeg")  # Set ffmpeg for pydub
+# ✅ Add ffmpeg to path
+os.environ["PATH"] = f"{TMP_DIR}:{os.environ.get('PATH', '')}"
+AudioSegment.converter = which("ffmpeg")
 
-# Load Whisper model
 @st.cache_resource
 def load_whisper_model():
     model_name = "openai/whisper-large-v3-turbo"
